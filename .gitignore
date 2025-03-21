@@ -10,3 +10,6 @@ modules*
 # We want to ignore all the built artifacts
 build/
 build.yaml
+
+# Ignore all nix artifacts
+result/

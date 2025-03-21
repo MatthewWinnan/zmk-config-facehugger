@@ -80,7 +80,6 @@ in
 
     installPhase = ''
       mkdir $out
-      ls -al ./build/zephyr/
       cp ./build/zephyr/zmk.uf2 $out/kyria_rev3_left.uf2
     '';
   }

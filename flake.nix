@@ -52,7 +52,6 @@
         );
       in {
         formatter = alejandra.defaultPackage.${system};
-        #formatter.${system} = inputs.alejandra.nixosModules.alejandra;
         devShells = import ./nix/shell {inherit callPackage;};
         packages = import ./nix/packages {inherit callPackage;};
       }
