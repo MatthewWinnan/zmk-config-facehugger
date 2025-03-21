@@ -38,7 +38,7 @@
         });
       in
       {
-        devShells.kyria = callPackage ./kyria_v3/shell.nix { };
+        devShells = import ./nix/shell { inherit callPackage; };
       }
     ));
 }
