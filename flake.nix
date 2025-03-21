@@ -2,10 +2,16 @@
   description = "Flakes for ZMK based projects";
 
   inputs = {
-   # unstable gcovr is missing from the zephyr python environment
-   nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    # unstable gcovr is missing from the zephyr python environment
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
 
-   # Customize the version of Zephyr used by the flake here
+    # Nix Formatter
+    alejandra = {
+      url = "github:kamadorueda/alejandra/3.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Customize the version of Zephyr used by the flake here
     zephyr = {
       url = "github:zephyrproject-rtos/zephyr/v3.5.0";
       flake = false;
@@ -26,19 +32,30 @@
     };
   };
 
-   outputs = { self, nixpkgs, flake-utils, ... }@inputs: (
-    flake-utils.lib.eachDefaultSystem (system:
-      let
+  outputs = {
+    self,
+    nixpkgs,
+    flake-utils,
+    alejandra,
+    ...
+  } @ inputs: (
+    flake-utils.lib.eachDefaultSystem (
+      system: let
         pkgs = nixpkgs.legacyPackages.${system};
-        zephyr = inputs.zephyr-nix.packages.${system};
 
-        callPackage = pkgs.newScope (pkgs // {
-          zephyr = inputs.zephyr-nix.packages.${system};
-          west2nix = callPackage inputs.west2nix.lib.mkWest2nix { };
-        });
-      in
-      {
-        devShells = import ./nix/shell { inherit callPackage; };
+        callPackage = pkgs.newScope (
+          pkgs
+          // {
+            zephyr = inputs.zephyr-nix.packages.${system};
+            west2nix = callPackage inputs.west2nix.lib.mkWest2nix {};
+          }
+        );
+      in {
+        formatter = alejandra.defaultPackage.${system};
+        #formatter.${system} = inputs.alejandra.nixosModules.alejandra;
+        devShells = import ./nix/shell {inherit callPackage;};
+        packages = import ./nix/packages {inherit callPackage;};
       }
-    ));
+    )
+  );
 }

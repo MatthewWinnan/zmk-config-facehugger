@@ -1,9 +1,3 @@
-{
- callPackage,
- ...
-}:
-{
-
- kyria_shell = callPackage ./kyria.nix { };
-
+{callPackage, ...}: {
+  kyria_shell = callPackage ./kyria.nix {};
 }
