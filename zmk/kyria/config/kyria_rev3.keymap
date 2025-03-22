@@ -7,9 +7,11 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
+
 // This is needed for mousing
 #include <dt-bindings/zmk/pointing.h>
 
+// For RGB
 #include <dt-bindings/zmk/rgb.h>
 #include <dt-bindings/zmk/outputs.h>
 

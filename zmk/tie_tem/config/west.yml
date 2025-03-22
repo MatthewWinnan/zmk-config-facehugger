@@ -1,0 +1,94 @@
+manifest:
+  remotes:
+
+    - name: zephyrproject-rtos
+      url-base: https://github.com/zephyrproject-rtos
+
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
+
+    - name: za-facehugger
+      url-base: https://github.com/MatthewWinnan
+
+    - name: urob
+      url-base: https://github.com/urob
+
+  projects:
+
+    - name: zmk-facehugger
+      remote: za-facehugger
+      revision: 56fd56665d8e9c847fb151fd94c229f50b949b9a
+
+    - name: TIE-TEM
+      remote: za-facehugger
+      revision: main
+
+    - name: zephyr
+      remote: zmkfirmware
+      revision: 0fa4cc26d8b1e5243570ccc0f7f66c4c428d2961
+      clone-depth: 1
+      import:
+        name-blocklist:
+          # This is because upstread babble is being blocked, can't pin the manifest
+          - babblesim_base
+          - babblesim_ext_2G4_libPhyComv1
+          - babblesim_ext_2G4_phy_v1
+          - babblesim_ext_2G4_channel_NtNcable
+          - babblesim_ext_2G4_channel_multiatt
+          - babblesim_ext_2G4_modem_magic
+          - babblesim_ext_2G4_modem_BLE_simple
+          - babblesim_ext_2G4_device_burst_interferer
+          - babblesim_ext_2G4_device_WLAN_actmod
+          - babblesim_ext_2G4_device_playback
+          - babblesim_ext_libCryptov1
+
+          # This is because upstream optional is blocked, again can not pin the manifest
+          - lz4
+          - psa-arch-tests
+          - sof
+          - tf-m-tests
+          - tflite-micro
+          - thrift
+          - zscilib
+          - bsim
+          - chre
+
+          # This is standard
+          - ci-tools
+          - hal_altera
+          - hal_cypress
+          - hal_infineon
+          - hal_microchip
+          - hal_nxp
+          - hal_openisa
+          - hal_silabs
+          - hal_xtensa
+          - hal_st
+          - hal_ti
+          - loramac-node
+          - mcuboot
+          - mcumgr
+          - net-tools
+          - openthread
+          - edtt
+          - trusted-firmware-m
+
+    - name: nanopb
+      revision: 8c60555d6277a0360c876bd85d491fc4fb0cd74a
+      path: modules/lib/nanopb
+      remote: zmkfirmware
+
+    - name: zmk-studio-messages
+      revision: 6cb4c283e76209d59c45fbcb218800cd19e9339d
+      path: modules/msgs/zmk-studio-messages
+      remote: zmkfirmware
+
+    # Adds the auto sticky layer, similar to CAPITAL_WORDS
+    - name: zmk-auto-layer
+      remote: urob
+      revision: 798724059ae748f6e79bbb134c28d47602ed2792
+      path: modules/zmk-auto-layer
+
+  self:
+    west-commands: scripts/west-commands.yml
+    path: config

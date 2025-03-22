@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The following serves as a mono-repo for all of my [ZMK](https://zmk.dev/) based keyboards.
+The following serves as a mono-repo for all to required configuration files and build files for my [ZMK](https://zmk.dev/) based keyboards.
 
 The main tool I am using is [Zephyr](https://github.com/adisbladis/west2nix)'s own meta-tool [West](https://docs.zephyrproject.org/latest/develop/west/index.html).
 
@@ -109,4 +109,9 @@ and or derivations to perform automatic renaming, group building, flashing and s
 
 ## Supported Boards
 - The [Kyria](https://docs.splitkb.com/product-guides/kyria) revision 3.
-- Modified hand wired [Totem](https://github.com/GEIGEIGEIST/TOTEM) keyboard.
+- Modified hand wired [TOTEM](https://github.com/GEIGEIGEIST/TOTEM) keyboard called the [TIE-TEM](https://github.com/MatthewWinnan/TIE-TEM).
+
+## Additional features
+
+I have included the [Alejandra](https://github.com/kamadorueda/alejandra) nix formatter. To format any nix code simply use `nix fmt` within the 
+flake directory. You can further define what needs to be formatted. Simply run `nix fmt --help` for additional commands.

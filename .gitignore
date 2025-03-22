@@ -13,3 +13,6 @@ build.yaml
 
 # Ignore all nix artifacts
 result/
+
+# Ignore all my modular per keyboard artifacts
+TIE-TEM/
