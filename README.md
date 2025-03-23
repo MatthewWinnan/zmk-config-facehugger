@@ -98,20 +98,24 @@ For more information about the west manifest please consult [West Manifests](htt
 If you can freeze the manifest then it is possible to run `west2nix` to produce the needed `west2nix.toml` file which can then be ingested by
 west2nix.
 
-Next create a build config under `nix/packages/<board_name>`. Typically one would need to include two, one for the left and another for the right 
+Next create a build config under `nix/packages/<board_name>`. Typically one would need to include two, one for the left and another for the right
 side. Non split keyboards only need one and as such you can just have a central one. Here there is no convention, just make it reasonable.
 
 Use the included build configs for examples.
 
-Add the final build configs to `nix/packages/default.nix` and then one can build it with `nix build .#<build_name>`. The final .uf2 file 
-will be located in the symlinked results/ directory. This is directly references into the nix store, as such this can be used within other hooks 
+Add the final build configs to `nix/packages/default.nix` and then one can build it with `nix build .#<build_name>`. The final .uf2 file
+will be located in the symlinked results/ directory. This is directly references into the nix store, as such this can be used within other hooks
 and or derivations to perform automatic renaming, group building, flashing and so forth.
 
 ## Supported Boards
 - The [Kyria](https://docs.splitkb.com/product-guides/kyria) revision 3.
 - Modified hand wired [TOTEM](https://github.com/GEIGEIGEIST/TOTEM) keyboard called the [TIE-TEM](https://github.com/MatthewWinnan/TIE-TEM).
 
-## Additional features
+## Additional Flake features
 
-I have included the [Alejandra](https://github.com/kamadorueda/alejandra) nix formatter. To format any nix code simply use `nix fmt` within the 
+I have included the [Alejandra](https://github.com/kamadorueda/alejandra) nix formatter. To format any nix code simply use `nix fmt` within the
 flake directory. You can further define what needs to be formatted. Simply run `nix fmt --help` for additional commands.
+
+## Special Thanks
+- [urob](https://github.com/urob) for their amazing ZMK modules and helper configs.
+- [adisbladis](https://github.com/adisbladis) for their west2nix and zephyr-nix nix modules.

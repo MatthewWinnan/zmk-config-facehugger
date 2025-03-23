@@ -1,7 +1,7 @@
 # # We want to ignore all the west artifacts
 .west/
 zephyr*
-zmk-facehugger*
+zmk*
 boards/
 
 # We want to ignore the modules being used

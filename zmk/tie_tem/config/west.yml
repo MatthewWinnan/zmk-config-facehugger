@@ -10,8 +10,13 @@ manifest:
     - name: za-facehugger
       url-base: https://github.com/MatthewWinnan
 
+    # Great helper scripts and auxilary modules
     - name: urob
       url-base: https://github.com/urob
+
+    # nice_oled
+    - name: mctechnology17
+      url-base: https://github.com/mctechnology17
 
   projects:
 
@@ -88,6 +93,24 @@ manifest:
       remote: urob
       revision: 798724059ae748f6e79bbb134c28d47602ed2792
       path: modules/zmk-auto-layer
+
+    # Adds a list of helper functions
+    - name: zmk-helpers
+      remote: urob
+      revision: main
+      path: modules/zmk-helpers
+
+    # Helps to set up leader keys
+    - name: zmk-leader-key
+      remote: urob
+      revision: v0.2 # set to same as ZMK version above
+      path: modules/zmk-leader-key
+
+    # nice_oled
+    - name: zmk-nice-oled
+      remote: mctechnology17
+      revision: main
+      path: modules/zmk-nice-oled
 
   self:
     west-commands: scripts/west-commands.yml
