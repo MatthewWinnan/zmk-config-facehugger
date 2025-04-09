@@ -3,6 +3,7 @@
 zephyr*
 zmk*
 boards/
+firmware/
 
 # We want to ignore the modules being used
 modules*

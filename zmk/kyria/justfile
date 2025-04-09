@@ -1,0 +1,32 @@
+default:
+    @just --list --unsorted
+
+config := absolute_path('config')
+build := absolute_path('.build')
+out := absolute_path('firmware')
+draw := absolute_path('draw')
+
+# build firmware for single board & shield combination
+_build_single $board $shield *west_args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    artifact="${shield:+${shield// /+}-}${board}"
+    build_dir="{{ build / '$artifact' }}"
+
+    echo "Building firmware for $artifact..."
+    west build -s zmk-facehugger/app -d "$build_dir" -b $board {{ west_args }} -- \
+    ${shield:+-DSHIELD="$shield"}
+
+    if [[ -f "$build_dir/zephyr/zmk.uf2" ]]; then
+        mkdir -p "{{ out }}" && cp "$build_dir/zephyr/zmk.uf2" "{{ out }}/$artifact.uf2"
+    else
+
+build_left:
+  just _build_single "nice_nano_v2" "kyria_rev3_left nice_view_adapter kyria_nice_view"
+
+build_right:
+  just _build_single "nice_nano_v2" "kyria_rev3_right nice_view_adapter kyria_nice_view"
+
+build_all:
+  just build_left
+  just build_right

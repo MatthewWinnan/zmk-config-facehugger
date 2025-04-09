@@ -7,6 +7,7 @@
   cmake,
   ninja,
   git,
+  just,
   callPackage,
   ...
 }: let
@@ -34,6 +35,7 @@ in
       cmake
       ninja
       git
+      just
     ];
 
     shellHook = ''

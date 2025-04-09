@@ -8,6 +8,7 @@
   ninja,
   git,
   callPackage,
+  just,
   ...
 }: let
   # We need 32-bit support
@@ -34,6 +35,7 @@ in
       cmake
       ninja
       git
+      just
     ];
 
     shellHook = ''
