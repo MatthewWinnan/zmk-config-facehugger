@@ -13,7 +13,7 @@
   lib,
 }: let
   west2nixHook = west2nix.mkWest2nixHook {
-    manifest = ../../../zmk/kyria/config/west2nix.toml;
+    manifest = ../../../zmk/tie_tem/config/west2nix.toml;
   };
 
   # For some reason I need to do this so I do not end up with a broken source path
@@ -22,7 +22,7 @@
   };
 in
   stdenv.mkDerivation {
-    name = "kyria_right";
+    name = "tie_tem_left";
 
     nativeBuildInputs = [
       (zephyr.sdk.override {
@@ -45,7 +45,7 @@ in
 
       # We need to copy things to standard directories for the __west2nix_configureHook
       mkdir config/
-      cp zmk/kyria/config/* config/
+      cp zmk/tie_tem/config/* config/
 
        __west2nix_configureHook
 
@@ -61,7 +61,7 @@ in
 
        # We further want to add cmake arguments, better to do it here since the -DSHIELD string is being parsed weirdly by
        # westBuildFlags
-       west config build.cmake-args -- "-DSHIELD=\"kyria_rev3_right nice_view_adapter kyria_nice_view\" -DZMK_CONFIG=$PWD/zmk/kyria/config"
+       west config build.cmake-args -- "-DSHIELD=\"tie_tem_left nice_oled\" -DZMK_CONFIG=$PWD/zmk/tie_tem/config"
     '';
 
     # Note: This should be set by the hook but it's tricky to get the ordering correct
@@ -72,7 +72,7 @@ in
 
     westBuildFlags = [
       "-b"
-      "nice_nano_v2"
+      "seeeduino_xiao_ble"
       "-d"
       "build"
       "zmk-facehugger/app/"
@@ -80,6 +80,6 @@ in
 
     installPhase = ''
       mkdir $out
-      cp ./build/zephyr/zmk.uf2 $out/kyria_rev3_left.uf2
+      cp ./build/zephyr/zmk.uf2 $out/tie_tem_left.uf2
     '';
   }

@@ -13,11 +13,20 @@
 // This is for auto layers
 #include <behaviors/num_word.dtsi>
 
+#ifdef CONFIG_SHIELD_TIE_TEM_LEFT_KSCAN0
 // We want to add my annoying fix if this is left side
-#ifdef SHIELD_TIE_TEM_LEFT
 &kscan0 {
+    col-gpios
+        = <&xiao_d 6 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 7 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 10 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 9 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 8 GPIO_ACTIVE_HIGH>
+        ;
+
 /* This is because I messed up, I accidentally swapped my
  * row 2 and 3, please uncomment when making it correctly
+ * unfortunately this gets applied after my local config, so we need to keep this
  */
     row-gpios
         = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
@@ -40,6 +49,10 @@
 #define SPECIAL 4
 // The idea here is to allow me to change settings like BT, display, RGB etc
 #define SETTINGS 5
+// Special gaming layer to make gaming easier, still weird to toggle between layers for gaming :P
+#define GAMING 6
+// We need to get to numbers somehow, so we need this gaming layer too, only accessable through game layer
+#define AGAMING 7
 
 // Pull in our helper scripts
 #include "zmk-helpers/helper.h"
@@ -97,7 +110,8 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 // Import our combo definition
 #include "combos.dtsi"
 
-ZMK_TAP_DANCE(window_layer_dance, bindings = <&lm NUMPAD LEFT_ALT>, <&win_layer WINDOW>; tapping-term-ms = <200>;)
+// My pinky is rather weak so a larger timeout here
+ZMK_TAP_DANCE(window_layer_dance, bindings = <&lm NUMPAD LEFT_ALT>, <&win_layer WINDOW>; tapping-term-ms = <350>;)
 
 / {
   conditional_layers {
@@ -208,7 +222,7 @@ display-name = "QWERTY"                    ;
 //             ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓   ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓
 //             ┃     Q     ┃     W     ┃     E     ┃     R     ┃     T     ┃   ┃     Y     ┃     U     ┃     I     ┃     O     ┃     P     ┃
 //             ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫
-//             ┃     A     ┃     S     ┃     D     ┃     F     ┃     G     ┃   ┃     H     ┃     J     ┃     K     ┃     L     ┃     ;/:     ┃
+//             ┃   A/ALT   ┃     S     ┃     D     ┃     F     ┃     G     ┃   ┃     H     ┃     J     ┃     K     ┃     L     ┃     ;/:     ┃
 // ┏━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┓
 // ┃bootloader ┃     Z     ┃     X     ┃     C     ┃     V     ┃     B     ┃   ┃     N     ┃     M     ┃     ,     ┃     .     ┃     /     ┃   window_layer_dance  ┃
 // ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
@@ -217,7 +231,7 @@ display-name = "QWERTY"                    ;
  bindings = <
 // ╷           ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷           ╷
                 &kp Q       &kp W       &kp E       &kp R       &kp T           &kp Y       &kp U       &kp I       &kp O       &kp P
-                &kp A       &kp S       &kp D       &kp F       &kp G           &kp H       &kp J       &kp K       &kp L       &hmr SQT SEMI
+                &hml LEFT_ALT A       &kp S       &kp D       &kp F       &kp G           &kp H       &kp J       &kp K       &kp L       &hmr SQT SEMI
     &bootloader &kp Z       &kp X       &kp C       &kp V       &kp B           &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH    &window_layer_dance
                                         &numpad_layer_dance   &kp SPACE   &ctrl_dance       &shift_dance &kp ENTER &symbols_layer_dance
                         >;
@@ -266,7 +280,7 @@ display-name = "WINDOW"                    ;
 
 symbols_layer {
 // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-label= "SYMBOLS"                               ;
+display-name= "SYMBOLS"                               ;
 // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 //             ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓   ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓
 //             ┃           ┃           ┃     {     ┃     }     ┃     #     ┃   ┃     <     ┃     >     ┃     $     ┃     @     ┃     |     ┃
@@ -288,7 +302,7 @@ label= "SYMBOLS"                               ;
 
 special_layer {
 // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-label= "SPECIAL"                           ;
+display-name = "SPECIAL"                           ;
 // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 //             ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓   ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓
 //             ┃    F1     ┃     F2    ┃     F3    ┃     F4    ┃     F5    ┃   ┃     F6    ┃     F7    ┃     F8    ┃     F9    ┃     F10   ┃
@@ -314,7 +328,7 @@ label= "SPECIAL"                           ;
 
 settings_layer {
 // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-label= "SETTINGS"                               ;
+display-name= "SETTINGS"                               ;
 // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 //             ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓   ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓
 //             ┃    BT 0   ┃    BT 1   ┃    BT 2   ┃    BT 3   ┃     BT 4  ┃   ┃           ┃           ┃           ┃           ┃           ┃
@@ -334,6 +348,31 @@ label= "SETTINGS"                               ;
                                             &to DEFAULT   &bootloader      &trans            &trans        &trans        &to DEFAULT
                         >;
                 };
-        };
 
+gaming_layer {
+// ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+display-name= "GAME"                               ;
+// ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+ bindings = <
+              &hml TAB T &kp Q  &kp W  &kp E   &kp R                                        &kp Y       &kp U       &kp I       &kp O       &kp P
+              &hml LSHIFT G &kp A  &kp S  &kp D   &kp F                                     &kp H       &kp J       &kp K       &kp L       &hmr SQT SEMI
+   &tog AGAME  &kp Z &kp X  &kp C  &kp V   &kp B                                     &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH    &window_layer_dance
+                                  &kp LEFT_ALT  &kp SPACE  &kp LCTRL                      &shift_dance &kp ENTER &to DEFAULT
+            >;
+                };
+
+alt_gaming_layer {
+// ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+display-name= "AGAME"                               ;
+// ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+ bindings = <
+              &kp N1 &kp N2 &kp N4  &kp N5                                            &kp N6       &kp N7       &kp N8       &N9       &N0
+              &trans &kp trans  &kp I  &kp J   &trans                                     &kp H       &kp J       &kp K       &kp L       &hmr SQT SEMI
+   &tog AGAME     &kp Z &kp X  &kp C  &kp V   &kp B                                     &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH    &window_layer_dance
+                                  &to DEFAULT  &kp ENTER  &kp TAB                      &shift_dance &kp ENTER &to DEFAULT
+            >;
+                };
+
+
+        };
     };

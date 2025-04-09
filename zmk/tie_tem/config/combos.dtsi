@@ -21,18 +21,20 @@ ZMK_TAP_DANCE(terminal_copy_paste_dance, bindings = <&kp LC(LS(C))>, <&kp LC(LS(
               tapping-term-ms = <200>;)
 
 /* Horizontal combos - left hand */
-ZMK_COMBO(esc,   &kp ESC,      LT2 LT1,     DEFAULT SYMBOLS NUMPAD, COMBO_TERM_SLOW, COMBO_IDLE_FAST)
-ZMK_COMBO(shift,   &kp LSHIFT, LM4 LM3, DEFAULT, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(tab,   &kp TAB, LM2 LM1, DEFAULT, COMBO_TERM_FAST, COMBO_IDLE_FAST)
-ZMK_COMBO(copy_paste,  &terminal_copy_paste_dance,  LB2 LB1, DEFAULT, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+ZMK_COMBO(esc,   &kp ESC,      LT2 LT1,     DEFAULT SYMBOLS NUMPAD WINDOW GAMING AGAMING, COMBO_TERM_SLOW, COMBO_IDLE_FAST)
+ZMK_COMBO(shift,   &kp LSHIFT, LM4 LM3, DEFAULT, COMBO_TERM_SLOW, COMBO_IDLE_FAST)
+ZMK_COMBO(tab,   &kp TAB, LM2 LM1, DEFAULT, COMBO_TERM_SLOW, COMBO_IDLE_FAST)
+ZMK_COMBO(copy_paste,  &terminal_copy_paste_dance,  LB2 LB1, DEFAULT, COMBO_TERM_SLOW, COMBO_IDLE_FAST)
 
 /* Horizontal combos - right hand */
-ZMK_COMBO(bspc,  &kp BSPC,     RT1 RT2, DEFAULT, COMBO_TERM_SLOW, COMBO_IDLE_FAST)
-ZMK_COMBO(underscore, &kp UNDERSCORE, RM1 RM2, DEFAULT, COMBO_TERM_FAST, COMBO_IDLE_FAST )
+ZMK_COMBO(bspc,  &kp BSPC,     RT1 RT2, DEFAULT SYMBOLS NUMPAD WINDOW, COMBO_TERM_SLOW, COMBO_IDLE_FAST)
+ZMK_COMBO(underscore, &kp UNDERSCORE, RM1 RM2, DEFAULT, COMBO_TERM_SLOW, COMBO_IDLE_FAST )
 
 /* Vertical combos - left hand */
 
 /* Vertical combos - right hand */
 
-/* Obscure combos */
-ZMK_COMBO(settings,   &to SETTINGS,      LB5 RB5,     DEFAULT SYMBOLS NUMPAD, COMBO_TERM_SLOW, COMBO_IDLE_FAST)
+/* Thumb combos */
+ZMK_COMBO(settings,   &to SETTINGS,      LH2 RH2,     DEFAULT SYMBOLS NUMPAD, COMBO_TERM_SLOW, COMBO_IDLE_FAST)
+/* This combo is weird enough not to trip myself up right? */
+ZMK_COMBO(gaming,   &to GAMING,      LH1 RH1,     DEFAULT SYMBOLS NUMPAD, COMBO_TERM_SLOW, COMBO_IDLE_FAST)

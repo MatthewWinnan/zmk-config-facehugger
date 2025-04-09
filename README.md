@@ -116,6 +116,12 @@ and or derivations to perform automatic renaming, group building, flashing and s
 I have included the [Alejandra](https://github.com/kamadorueda/alejandra) nix formatter. To format any nix code simply use `nix fmt` within the
 flake directory. You can further define what needs to be formatted. Simply run `nix fmt --help` for additional commands.
 
+## Current issues to work on
+
+- I need a per left side override on .keymap config level. This is due to me assembling the board incorrectly,
+currently I am overriding the row declarations in the dtsi, but I would rather not.
+
 ## Special Thanks
+
 - [urob](https://github.com/urob) for their amazing ZMK modules and helper configs.
 - [adisbladis](https://github.com/adisbladis) for their west2nix and zephyr-nix nix modules.

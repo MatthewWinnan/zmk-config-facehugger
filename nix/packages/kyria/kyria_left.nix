@@ -22,7 +22,7 @@
   };
 in
   stdenv.mkDerivation {
-    name = "west2nix-example";
+    name = "kyria_left";
 
     nativeBuildInputs = [
       (zephyr.sdk.override {
