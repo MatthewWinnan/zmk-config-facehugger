@@ -30,7 +30,9 @@ manifest:
 
     - name: zephyr
       remote: zmkfirmware
-      revision: 0fa4cc26d8b1e5243570ccc0f7f66c4c428d2961
+      revision: 628a0d85e36938dddb6f0dfc6dc902de7359711c
+      # If there are any west update errors, please pull from here and replace above with latest commit
+      #revision: v3.5.0+zmk-fixes
       clone-depth: 1
       import:
         name-blocklist:

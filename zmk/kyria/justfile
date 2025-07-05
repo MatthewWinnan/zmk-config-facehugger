@@ -14,12 +14,24 @@ _build_single $board $shield *west_args:
     build_dir="{{ build / '$artifact' }}"
 
     echo "Building firmware for $artifact..."
-    west build -s zmk-facehugger/app -d "$build_dir" -b $board {{ west_args }} -- \
+    echo "Building in $build_dir....."
+    west build -p -s zmk-facehugger/app -d "$build_dir" -b $board {{ west_args }} -- \
     ${shield:+-DSHIELD="$shield"}
+
+    if [[ -f "$build_dir/compile_commands.json" ]]; then
+        mkdir -p "{{ out }}" && cp "$build_dir/compile_commands.json" "{{ out }}/compile_commands.json"
+    else
+        echo "The compile commands file $build_dir/compile_commands.json, does not exist"
+    fi
 
     if [[ -f "$build_dir/zephyr/zmk.uf2" ]]; then
         mkdir -p "{{ out }}" && cp "$build_dir/zephyr/zmk.uf2" "{{ out }}/$artifact.uf2"
     else
+        mkdir -p "{{ out }}" && cp "$build_dir/zephyr/zmk.bin" "{{ out }}/$artifact.bin"
+    fi
+
+    # Remove the temp directory
+    rm -rf "$build/"
 
 build_left:
   just _build_single "nice_nano_v2" "kyria_rev3_left nice_view_adapter kyria_nice_view"

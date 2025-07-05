@@ -40,6 +40,9 @@
 // We need extra behavior, so add a map for arrows and numbers
 #define AGAMING 8
 
+// Define some things that need to work with my window manager
+#define MOD_KEY LGUI
+
 &led_strip {
     // Defines my RGB chain length
     chain-length = <31>;
@@ -113,7 +116,7 @@ behaviors {
             label = "alt_dance";
             #binding-cells = <0>;
             tapping-term-ms = <450>;
-            bindings = <&lm 1 LEFT_ALT>, <&sk LSHIFT>, <&caps_word>;
+            bindings = <&lm NUMPAD LEFT_ALT>, <&sk LSHIFT>, <&caps_word>;
         };
 
   td2: td2 {
@@ -129,7 +132,7 @@ behaviors {
             label = "ctrl_dance";
             #binding-cells = <0>;
             tapping-term-ms = <450>;
-            bindings = <&kp LCTRL>, <&lm 1 LEFT_ALT>;
+            bindings = <&kp LCTRL>, <&lm NUMPAD LEFT_ALT>;
         };
 
   shift_dance: shift_dance {
@@ -153,7 +156,7 @@ behaviors {
       compatible = "zmk,behavior-tap-dance";
       label = "window_layer_dance";
       #binding-cells = <0>;
-      bindings = <&lm NUMPAD LEFT_ALT>, <&win_layer WINDOW>;
+      bindings = <&lm NUMPAD MOD_KEY>, <&win_layer WINDOW>;
 
       tapping-term-ms = <250>;
   };
@@ -189,7 +192,7 @@ behaviors {
   win_layer: win_layer {
       compatible = "zmk,behavior-auto-layer";
       #binding-cells = <1>;
-      continue-list = <GREATER_THAN LESS_THAN ENTER LEFT_ALT RIGHT LEFT DOWN UP_ARROW LEFT_SHIFT>;
+      continue-list = <GREATER_THAN LESS_THAN ENTER LEFT_ALT MOD_KEY RIGHT LEFT DOWN UP_ARROW LEFT_SHIFT>;
       ignore-numbers;
       ignore-alphas;
       };
@@ -254,10 +257,10 @@ behaviors {
         window_layer {
             display-name = "WINDOW";
             bindings = <
-              &kp ESCAPE  &kp LA(N1)  &kp LA(N2)  &kp LA(N3)  &kp LA(N4)  &kp LA(N5)                                  &kp LA(N6)    &kp LA(N7)    &kp LA(N8)        &kp LA(N9)     &kp LA(N0)  &trans
-              &kp LEFT_SHIFT  &kp LA(Q)  &trans  &kp LA(D)  &kp LA(F)  &kp LA(T)                                  &kp LA(LEFT)  &kp LA(DOWN)  &kp LA(UP_ARROW)  &kp LA(RIGHT)  &kp LA(P)  &trans
-              &trans  &trans  &trans  &kp LA(C)  &trans  &trans  &kp LA(TAB)  &trans             &trans  &trans  &trans    &kp LA(LESS_THAN)    &kp LA(GREATER_THAN)        &trans     &trans  &kp ESCAPE
-                        &trans  &trans  &trans  &trans  &trans                              &trans  &kp LA(ENTER)  &trans    &trans    &trans
+              &kp ESCAPE  &kp LG(N1)  &kp LG(N2)  &kp LG(N3)  &kp LG(N4)  &kp LG(N5)                                  &kp LG(N6)    &kp LG(N7)    &kp LG(N8)        &kp LG(N9)     &kp LG(N0)  &trans
+              &kp LEFT_SHIFT  &kp LG(Q)  &trans  &kp LG(D)  &kp LG(F)  &kp LG(T)                                  &kp LG(LEFT)  &kp LG(DOWN)  &kp LG(UP_ARROW)  &kp LG(RIGHT)  &kp LG(P)  &trans
+              &trans  &trans  &trans  &kp LG(C)  &trans  &trans  &kp LG(TAB)  &trans             &trans  &trans  &trans    &kp LG(LESS_THAN)    &kp LG(GREATER_THAN)        &trans     &trans  &kp ESCAPE
+                        &trans  &trans  &trans  &trans  &trans                              &trans  &kp LG(ENTER)  &trans    &trans    &trans
             >;
         };
 

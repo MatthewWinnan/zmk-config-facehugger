@@ -54,6 +54,9 @@
 // We need to get to numbers somehow, so we need this gaming layer too, only accessable through game layer
 #define AGAMING 7
 
+// Define some things that need to work with my window manager
+#define MOD_KEY LGUI
+
 // Pull in our helper scripts
 #include "zmk-helpers/helper.h"
 #include "zmk-helpers/key-labels/totem.h"
@@ -111,16 +114,16 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 #include "combos.dtsi"
 
 // My pinky is rather weak so a larger timeout here
-ZMK_TAP_DANCE(window_layer_dance, bindings = <&lm NUMPAD LEFT_ALT>, <&win_layer WINDOW>; tapping-term-ms = <350>;)
+ZMK_TAP_DANCE(window_layer_dance, bindings = <&lm NUMPAD MOD_KEY>, <&win_layer WINDOW>; tapping-term-ms = <350>;)
 
 / {
-  conditional_layers {
-        compatible = "zmk,conditional-layers";
-        tri_layer {
-            if-layers = <SYMBOLS NUMPAD>;
-            then-layer = <SETTINGS>;
-        };
-    };
+  // conditional_layers {
+  //       compatible = "zmk,conditional-layers";
+  //       tri_layer {
+  //           if-layers = <SYMBOLS NUMPAD>;
+  //           then-layer = <SETTINGS>;
+  //       };
+  //   };
 
   behaviors {
 
@@ -162,7 +165,7 @@ ZMK_TAP_DANCE(window_layer_dance, bindings = <&lm NUMPAD LEFT_ALT>, <&win_layer 
             label = "ctrl_dance";
             #binding-cells = <0>;
             tapping-term-ms = <450>;
-            bindings = <&kp LCTRL>, <&lm 1 LEFT_ALT>;
+            bindings = <&kp LCTRL>, <&lm NUMPAD LEFT_ALT>;
         };
 
   shift_dance: shift_dance {
@@ -186,7 +189,7 @@ ZMK_TAP_DANCE(window_layer_dance, bindings = <&lm NUMPAD LEFT_ALT>, <&win_layer 
       compatible = "zmk,behavior-tap-dance";
       label = "symbols_layer_dance";
       #binding-cells = <0>;
-      bindings = <&sl SYMBOLS>, <&mo SYMBOLS>;
+      bindings = <&mo SYMBOLS>, <&to SETTINGS>;
 
       tapping-term-ms = <250>;
   };
@@ -205,7 +208,7 @@ ZMK_TAP_DANCE(window_layer_dance, bindings = <&lm NUMPAD LEFT_ALT>, <&win_layer 
   win_layer: win_layer {
       compatible = "zmk,behavior-auto-layer";
       #binding-cells = <1>;
-      continue-list = <GREATER_THAN LESS_THAN ENTER LEFT_ALT RIGHT LEFT DOWN UP_ARROW LEFT_SHIFT>;
+      continue-list = <GREATER_THAN LESS_THAN ENTER LEFT_ALT RIGHT LEFT DOWN UP_ARROW LEFT_SHIFT MOD_KEY>;
       ignore-numbers;
       ignore-alphas;
       };
@@ -247,7 +250,7 @@ display-name = "NUMPAD"                    ;
 //             ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓   ┏━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┓
 //             ┃     1     ┃     2     ┃     3     ┃     4     ┃     5     ┃   ┃     6     ┃     7     ┃     8     ┃     9     ┃     0     ┃
 //             ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫
-//             ┃           ┃           ┃           ┃           ┃     T     ┃   ┃    LEFT   ┃   DOWN    ┃    UP     ┃   RIGHT   ┃     P     ┃
+//             ┃     Q     ┃           ┃           ┃           ┃     T     ┃   ┃    LEFT   ┃   DOWN    ┃    UP     ┃   RIGHT   ┃     P     ┃
 // ┏━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┓
 // ┃           ┃           ┃           ┃           ┃           ┃           ┃   ┃           ┃           ┃           ┃           ┃           ┃           ┃
 // ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
@@ -257,7 +260,7 @@ display-name = "NUMPAD"                    ;
 // ╷           ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷           ╷
 
                 &kp N1      &kp N2      &kp N3      &kp N4      &kp N5          &kp N6      &kp N7      &kp N8      &kp N9      &kp N0
-                &trans      &trans      &trans      &trans      &kp T           &kp LEFT    &kp DOWN    &kp UP_ARROW  &kp RIGHT  &kp P    &trans
+                &kp Q      &trans      &trans      &trans      &kp T           &kp LEFT    &kp DOWN    &kp UP_ARROW  &kp RIGHT  &kp P    &trans
                                         &trans      &trans      &trans          &trans      &trans   &trans
                         >;
                 };
@@ -270,10 +273,10 @@ display-name = "WINDOW"                    ;
 // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 // Specialized layer for my window manager, follows many of the same conventions as NUMPAD layer, with some added commands useful for hyprland
             bindings = <
-              &kp LA(N1)  &kp LA(N2)  &kp LA(N3)  &kp LA(N4)  &kp LA(N5)                                  &kp LA(N6)    &kp LA(N7)    &kp LA(N8)        &kp LA(N9)     &kp LA(N0)
-              &kp LA(Q)   &trans      &kp LA(D)   &kp LA(F)   &kp LA(T)                                  &kp LA(LEFT)  &kp LA(DOWN)  &kp LA(UP_ARROW)  &kp LA(RIGHT)  &kp LA(P)
-    &trans    &trans      &trans      &kp LA(C)   &trans      &kp LA(TAB)             &trans  &kp LA(LESS_THAN)    &kp LA(GREATER_THAN)        &trans     &trans    &trans
-                          &trans  &trans  &trans                              &trans  &kp LA(ENTER)  &trans
+              &kp LG(N1)  &kp LG(N2)  &kp LG(N3)  &kp LG(N4)  &kp LG(N5)                                  &kp LG(N6)    &kp LG(N7)    &kp LG(N8)        &kp LG(N9)     &kp LG(N0)
+              &kp LG(Q)   &trans      &kp LG(D)   &kp LG(F)   &kp LG(T)                                  &kp LG(LEFT)  &kp LG(DOWN)  &kp LG(UP_ARROW)  &kp LG(RIGHT)  &kp LG(P)
+    &trans    &trans      &trans      &kp LG(C)   &trans      &kp LG(TAB)             &trans  &kp LG(LESS_THAN)    &kp LG(GREATER_THAN)        &trans     &trans    &trans
+                          &trans  &trans  &trans                              &trans  &kp LG(ENTER)  &trans
             >;
         };
 
@@ -296,9 +299,10 @@ display-name= "SYMBOLS"                               ;
 
                 &trans  &trans  &kp LEFT_BRACE &kp RIGHT_BRACE &kp HASH       &kp LESS_THAN  &kp GREATER_THAN  &kp DOLLAR    &kp AT_SIGN &kp PIPE
                 &kp AMPERSAND  &kp GRAVE  &kp LBKT &kp RBKT &kp BACKSLASH          &kp EQUAL      &kp EXCLAMATION   &kp ASTERISK  &kp UNDERSCORE  &trans
-    &trans &trans      &trans  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS &kp CARET          &kp MINUS         &kp PLUS          &trans        &trans          &trans    &trans
+    &to SETTINGS &trans      &trans  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS &kp CARET          &kp MINUS         &kp PLUS          &trans        &trans          &trans    &to SPECIAL
                              &trans      &trans      &trans          &trans      &trans      &trans
                         >;
+      };
 
 special_layer {
 // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -318,13 +322,10 @@ display-name = "SPECIAL"                           ;
 
                 &kp F1  &kp F2  &kp F3   &kp F4   &kp F5       &kp F6   &kp F7   &kp F8   &kp F9      &kp F10
                 &kp PAGE_UP  &kp F11  &kp F12  &kp F13  &kp F14          &kp F15  &kp F16  &kp F17  &kp INSERT  &kp HOME
-  &to DEFAULT   &kp PAGE_UP  &kp F18  &kp F19  &kp F20  &kp F21          &kp F22  &kp F23  &kp F24  &kp DELETE  &kp END    &to DEFAULT
-                             &trans      &trans      &trans          &trans      &trans      &trans
+  &to GAMING   &kp PAGE_UP  &kp F18  &kp F19  &kp F20  &kp F21          &kp F22  &kp F23  &kp F24  &kp DELETE  &kp END    &to SETTINGS
+                             &trans      &trans      &to DEFAULT          &to DEFAULT      &trans      &trans
                         >;
                 };
-        };
-
-    };
 
 settings_layer {
 // ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -337,7 +338,7 @@ display-name= "SETTINGS"                               ;
 // ┏━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┓
 // ┃ SYS_RESET ┃           ┃           ┃           ┃           ┃           ┃   ┃           ┃           ┃           ┃           ┃           ┃ SYS_RESET ┃
 // ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┫   ┣━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
-//                                     ┃  DEFAULT  ┃    BOOT   ┃           ┃   ┃           ┃           ┃  DEFAULT  ┃
+//                                     ┃           ┃    BOOT   ┃  DEFAULT  ┃   ┃           ┃           ┃  DEFAULT  ┃
 //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
  bindings = <
 // ╷           ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷           ╷
@@ -345,7 +346,7 @@ display-name= "SETTINGS"                               ;
                 &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4         &trans        &trans        &trans        &trans        &trans
                 &trans        &trans        &trans        &bt BT_CLR    &bt BT_CLR_ALL       &trans        &trans        &trans        &trans        &trans  &sys_reset
     &sys_reset  &trans        &trans        &trans        &trans        &trans               &trans        &trans        &trans        &trans        &trans
-                                            &to DEFAULT   &bootloader      &trans            &trans        &trans        &to DEFAULT
+                                            &trans   &bootloader      &to DEFAULT            &trans        &trans        &to DEFAULT
                         >;
                 };
 
@@ -356,7 +357,7 @@ display-name= "GAME"                               ;
  bindings = <
               &hml TAB T &kp Q  &kp W  &kp E   &kp R                                        &kp Y       &kp U       &kp I       &kp O       &kp P
               &hml LSHIFT G &kp A  &kp S  &kp D   &kp F                                     &kp H       &kp J       &kp K       &kp L       &hmr SQT SEMI
-   &tog AGAMING  &kp Z &kp X  &kp C  &kp V   &kp B                                     &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH    &window_layer_dance
+   &mo AGAMING  &kp Z &kp X  &kp C  &kp V   &kp B                                     &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH    &window_layer_dance
                                   &kp LEFT_ALT  &kp SPACE  &kp LCTRL                      &shift_dance &kp ENTER &to DEFAULT
             >;
                 };
@@ -368,11 +369,10 @@ display-name= "AGAME"                               ;
  bindings = <
               &kp N1 &kp N2 &kp N4  &kp N5                                            &kp N6       &kp N7       &kp N8       &kp N9       &kp N0
               &trans &trans  &kp I  &kp J   &trans                                     &kp H       &kp J       &kp K       &kp L       &hmr SQT SEMI
-   &tog AGAMING     &kp Z &kp X  &kp C  &kp V   &kp B                                     &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH    &window_layer_dance
+   &trans     &kp Z &kp X  &kp C  &kp V   &kp B                                     &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH    &window_layer_dance
                                   &to DEFAULT  &kp ENTER  &kp TAB                      &shift_dance &kp ENTER &to DEFAULT
             >;
                 };
-
-
         };
     };
+};

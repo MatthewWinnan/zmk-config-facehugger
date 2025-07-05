@@ -63,8 +63,8 @@ in
       west config build.cmake-args -- "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DZMK_CONFIG=$(git rev-parse --show-toplevel)/zmk/kyria/config"
 
       # Now if the build does exist we can symlink the compile_commands
-      if [ -d "build" ]; then
-        ln -s build/compile_commands.json .;
+      if [ -d "firmware" ]; then
+        ln -s firmware/compile_commands.json .;
       else
         echo "There has been no builds yet, as such can not symlink compile_commands";
       fi

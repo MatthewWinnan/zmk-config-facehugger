@@ -16,6 +16,12 @@ _build_single $board $shield:
     echo "Building firmware for $artifact..."
     west build -p -s zmk-facehugger/app -d "$build_dir" -b $board -- ${shield:+-DSHIELD="$shield"}
 
+    if [[ -f "$build_dir/compile_commands.json" ]]; then
+        mkdir -p "{{ out }}" && cp "$build_dir/compile_commands.json" "{{ out }}/compile_commands.json"
+    else
+        echo "The compile commands file $build_dir/compile_commands.json, does not exist"
+    fi
+
     if [[ -f "$build_dir/zephyr/zmk.uf2" ]]; then
         mkdir -p "{{ out }}" && cp "$build_dir/zephyr/zmk.uf2" "{{ out }}/$artifact.uf2"
     else
@@ -23,7 +29,7 @@ _build_single $board $shield:
     fi
 
     # Remove the temp directory
-    rm -rvf "$build/"
+    rm -rf "$build_dir/"
 
 build_left:
   just _build_single "seeeduino_xiao_ble" "tie_tem_left nice_oled"
