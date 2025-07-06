@@ -64,7 +64,8 @@ in
 
       # Now if the build does exist we can symlink the compile_commands
       if [ -d "firmware" ]; then
-        ln -s firmware/compile_commands.json .;
+        # Update if it is there
+        ln -fs firmware/compile_commands.json .;
       else
         echo "There has been no builds yet, as such can not symlink compile_commands";
       fi

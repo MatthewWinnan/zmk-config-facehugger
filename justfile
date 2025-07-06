@@ -1,10 +1,10 @@
 default:
     @just --list --unsorted
 
-tie_tem_dev:
+tie_tem:
   nix develop .#tie_tem_shell
 
-kyria_dev:
+kyria:
   nix develop .#kyria_shell
 
 tie_tem_build:

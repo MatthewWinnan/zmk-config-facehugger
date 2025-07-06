@@ -33,12 +33,12 @@ _build_single $board $shield *west_args:
     # Remove the temp directory
     rm -rf "$build/"
 
-build_left:
+left:
   just _build_single "nice_nano_v2" "kyria_rev3_left nice_view_adapter kyria_nice_view"
 
-build_right:
+right:
   just _build_single "nice_nano_v2" "kyria_rev3_right nice_view_adapter kyria_nice_view"
 
-build_all:
+all:
   just build_left
   just build_right

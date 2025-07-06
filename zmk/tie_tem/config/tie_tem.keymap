@@ -13,29 +13,30 @@
 // This is for auto layers
 #include <behaviors/num_word.dtsi>
 
-#ifdef CONFIG_SHIELD_TIE_TEM_LEFT_KSCAN0
-// We want to add my annoying fix if this is left side
-&kscan0 {
-    col-gpios
-        = <&xiao_d 6 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 7 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 10 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 9 GPIO_ACTIVE_HIGH>
-        , <&xiao_d 8 GPIO_ACTIVE_HIGH>
-        ;
-
-/* This is because I messed up, I accidentally swapped my
- * row 2 and 3, please uncomment when making it correctly
- * unfortunately this gets applied after my local config, so we need to keep this
- */
-    row-gpios
-        = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        , <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        ;
-};
-#endif
+// #ifdef CONFIG_SHIELD_TIE_TEM_LEFT
+// // We want to add my annoying fix if this is left side
+// &kscan0 {
+//     label = "KSCAN";
+//     col-gpios
+//         = <&xiao_d 6 GPIO_ACTIVE_HIGH>
+//         , <&xiao_d 7 GPIO_ACTIVE_HIGH>
+//         , <&xiao_d 10 GPIO_ACTIVE_HIGH>
+//         , <&xiao_d 9 GPIO_ACTIVE_HIGH>
+//         , <&xiao_d 8 GPIO_ACTIVE_HIGH>
+//         ;
+//
+// /* This is because I messed up, I accidentally swapped my
+//  * row 2 and 3, please uncomment when making it correctly
+//  * unfortunately this gets applied after my local config, so we need to keep this
+//  */
+//     row-gpios
+//         = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+//         , <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+//         , <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+//         , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+//         ;
+// };
+// #endif
 
 // We define our layers
 #define DEFAULT 0
@@ -116,15 +117,28 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 // My pinky is rather weak so a larger timeout here
 ZMK_TAP_DANCE(window_layer_dance, bindings = <&lm NUMPAD MOD_KEY>, <&win_layer WINDOW>; tapping-term-ms = <350>;)
 
-/ {
-  // conditional_layers {
-  //       compatible = "zmk,conditional-layers";
-  //       tri_layer {
-  //           if-layers = <SYMBOLS NUMPAD>;
-  //           then-layer = <SETTINGS>;
-  //       };
-  //   };
+// This is a simple dance so I can toggle my gaming layer and still have LCTRL
+ZMK_TAP_DANCE(alt_game_dance, bindings = <&kp LCTRL>, <&mo AGAMING>; tapping-term-ms = <350>;)
 
+// This is a simple dance so I can have LALT work, but still have the option to toggle to my NUMPAD layer
+// This is more of a habit thing if I am navigating menus
+// NUMPAD has the LALT key as trans, should then carry this one over right? so spamming ALT should still allow
+// for alt dodge based games to work?
+ZMK_TAP_DANCE(game_numpad_dance, bindings = <&sk LALT>, <&mo NUMPAD>; tapping-term-ms = <350>;)
+
+// Simple macro that triggers the steam overlay
+ZMK_BEHAVIOR(steam_overlay, macro,
+  wait-ms = <100>;
+  tap-ms = <5>;
+  bindings = <&kp TAB &kp LSHIFT>;
+)
+
+// This is a dance that provides some useful gaming functions
+// For now can toggle between steam overlay and screen shot
+ZMK_TAP_DANCE(game_dance, bindings = <&steam_overlay>, <&kp F12>; tapping-term-ms = <350>;)
+
+
+/ {
   behaviors {
 
   // Some macros
@@ -320,7 +334,7 @@ display-name = "SPECIAL"                           ;
  bindings = <
 // ╷           ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷           ╷
 
-                &kp F1  &kp F2  &kp F3   &kp F4   &kp F5       &kp F6   &kp F7   &kp F8   &kp F9      &kp F10
+                &kp F1  &kp F2  &kp F3   &kp F4   &kp F5                &kp F6   &kp F7   &kp F8   &kp F9      &kp F10
                 &kp PAGE_UP  &kp F11  &kp F12  &kp F13  &kp F14          &kp F15  &kp F16  &kp F17  &kp INSERT  &kp HOME
   &to GAMING   &kp PAGE_UP  &kp F18  &kp F19  &kp F20  &kp F21          &kp F22  &kp F23  &kp F24  &kp DELETE  &kp END    &to SETTINGS
                              &trans      &trans      &to DEFAULT          &to DEFAULT      &trans      &trans
@@ -357,8 +371,8 @@ display-name= "GAME"                               ;
  bindings = <
               &hml TAB T &kp Q  &kp W  &kp E   &kp R                                        &kp Y       &kp U       &kp I       &kp O       &kp P
               &hml LSHIFT G &kp A  &kp S  &kp D   &kp F                                     &kp H       &kp J       &kp K       &kp L       &hmr SQT SEMI
-   &mo AGAMING  &kp Z &kp X  &kp C  &kp V   &kp B                                     &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH    &window_layer_dance
-                                  &kp LEFT_ALT  &kp SPACE  &kp LCTRL                      &shift_dance &kp ENTER &to DEFAULT
+   &game_dance  &kp Z &kp X  &kp C  &kp V   &kp B                                     &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH    &window_layer_dance
+                                  &game_numpad_dance  &kp SPACE  &alt_game_dance                      &shift_dance &kp ENTER &to DEFAULT
             >;
                 };
 
@@ -367,10 +381,10 @@ alt_gaming_layer {
 display-name= "AGAME"                               ;
 // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
  bindings = <
-              &kp N1 &kp N2 &kp N4  &kp N5                                            &kp N6       &kp N7       &kp N8       &kp N9       &kp N0
+              &kp N1 &kp N2 &kp N3 &kp N4  &kp N5                                            &kp N6       &kp N7       &kp N8       &kp N9       &kp N0
               &trans &trans  &kp I  &kp J   &trans                                     &kp H       &kp J       &kp K       &kp L       &hmr SQT SEMI
    &trans     &kp Z &kp X  &kp C  &kp V   &kp B                                     &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH    &window_layer_dance
-                                  &to DEFAULT  &kp ENTER  &kp TAB                      &shift_dance &kp ENTER &to DEFAULT
+                                  &trans  &kp ENTER  &kp TAB                      &shift_dance &kp ENTER &to DEFAULT
             >;
                 };
         };
