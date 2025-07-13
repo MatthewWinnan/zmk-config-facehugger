@@ -36,6 +36,6 @@ ZMK_COMBO(underscore, &kp UNDERSCORE, RM1 RM2, DEFAULT, COMBO_TERM_SLOW, COMBO_I
 /* Vertical combos - right hand */
 
 /* Thumb combos */
-ZMK_COMBO(settings,   &tog SETTINGS,      LH2 RH2, SETTINGS DEFAULT SYMBOLS NUMPAD, COMBO_TERM_SLOW, COMBO_IDLE_FAST)
+ZMK_COMBO(settings,   &tog SETTINGS,      LB5 RB5, SETTINGS DEFAULT SYMBOLS NUMPAD, COMBO_TERM_SLOW, COMBO_IDLE_FAST)
 /* This combo is weird enough not to trip myself up right? */
 ZMK_COMBO(gaming,   &to GAMING,      LH1 RH1,     DEFAULT SYMBOLS NUMPAD, COMBO_TERM_SLOW, COMBO_IDLE_FAST)

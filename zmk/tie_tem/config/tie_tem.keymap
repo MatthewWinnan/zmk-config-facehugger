@@ -249,7 +249,7 @@ display-name = "QWERTY"                    ;
 // ╷           ╷           ╷           ╷           ╷           ╷           ╷   ╷           ╷           ╷           ╷           ╷           ╷           ╷
                 &kp Q       &kp W       &kp E       &kp R       &kp T           &kp Y       &kp U       &kp I       &kp O       &kp P
                 &hml LEFT_ALT A       &kp S       &kp D       &kp F       &kp G           &kp H       &kp J       &kp K       &kp L       &hmr SQT SEMI
-    &bootloader &kp Z       &kp X       &kp C       &kp V       &kp B           &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH    &window_layer_dance
+    &window_layer_dance &kp Z       &kp X       &kp C       &kp V       &kp B           &kp N       &kp M       &kp COMMA   &kp DOT     &kp FSLH    &window_layer_dance
                                         &numpad_layer_dance   &kp SPACE   &ctrl_dance       &shift_dance &kp ENTER &symbols_layer_dance
                         >;
                 };
