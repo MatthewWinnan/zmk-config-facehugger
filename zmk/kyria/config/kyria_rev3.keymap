@@ -41,7 +41,8 @@
 #define AGAMING 8
 
 // Define some things that need to work with my window manager
-#define MOD_KEY LGUI
+// #define MOD_KEY LGUI
+#define MOD_KEY LEFT_ALT
 
 &led_strip {
     // Defines my RGB chain length
@@ -241,14 +242,14 @@ behaviors {
                               &lh_tog GAMING C_MUTE &window_layer_dance &numpad_layer_dance &kp SPACE &ctrl_dance  &shift_dance &kp ENTER &symbols_layer_dance &kp UNDERSCORE  &lt SETTINGS C_PLAY_PAUSE
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            sensor-bindings = <&inc_dec_kp PG_UP PG_DN &inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
         numpad_layer {
             display-name = "NUMPAD";
             bindings = <
               &kp Q  &kp N1  &kp N2  &kp N3  &kp N4  &kp N5                                  &kp N6    &kp N7    &kp N8        &kp N9     &kp N0  &trans
-              &trans  &trans  &trans  &trans  &trans  &kp T                                  &kp LEFT  &kp DOWN  &kp UP_ARROW  &kp RIGHT  &kp P  &trans
+              &trans  &kp Q  &trans  &trans  &trans  &kp T                                  &kp LEFT  &kp DOWN  &kp UP_ARROW  &kp RIGHT  &kp P  &trans
               &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans        &trans     &trans  &kp ESCAPE
                         &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans    &trans    &trans
             >;
